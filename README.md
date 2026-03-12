@@ -1,15 +1,29 @@
-Welcome to your new TanStack Start app! 
+TanStack Start + Better Auth + Drizzle + Tailwind Starter
 
-# Getting Started
+A practical starter for building a TanStack Start app with authentication, PostgreSQL, and modern styling. It includes a minimal auth flow, protected routes, and a Drizzle schema layout so you can ship quickly.
 
-To run this application:
+## Who this is for
+
+- Devs evaluating TanStack Start with a real auth + DB setup
+- Teams that want a clean foundation without a heavy UI kit
+- Anyone who wants file-based routing, typed data loaders, and a straightforward auth flow
+
+## What is included
+
+- TanStack Start + Router file-based routing
+- Better Auth with Google provider and server handler route
+- Drizzle ORM schema + migrations wiring for PostgreSQL
+- Tailwind CSS v4 setup
+- Protected routes + login flow
+
+## Quick start
 
 ```bash
 bun install
-bun --bun run dev
+bun run dev
 ```
 
-## Environment Variables
+## Environment variables
 
 Create a `.env` file in the project root (see `.env.example`):
 
@@ -21,200 +35,46 @@ GOOGLE_CLIENT_ID=
 GOOGLE_CLIENT_SECRET=
 ```
 
-## Auth
+## Auth setup
 
-This starter uses Better Auth with the TanStack Start cookies plugin and exposes the
-auth handler at `/api/auth/*`. Configure your OAuth app with the correct callback and
-ensure `BETTER_AUTH_URL` matches your site origin.
+- Auth handler lives at `/api/auth/*`.
+- Update your OAuth callback URLs to match your local and production origins.
+- Server auth code is in `src/features/auth/server.ts`.
+- Client auth code is in `src/features/auth/client.ts`.
 
 ## Database + Drizzle
 
-The schema lives in `src/lib/db/schema.ts` and migrations are generated via Drizzle Kit.
+The schema entry point is `src/lib/db/schema.ts`.
 
 ```bash
 bunx drizzle-kit generate
 bunx drizzle-kit migrate
 ```
 
-# Building For Production
+## Scripts
 
-To build this application for production:
+- Dev server: `bun run dev`
+- Production build: `bun run build`
+- Tests: `bun run test`
 
-```bash
-bun --bun run build
-```
+## Project structure
 
-## Testing
+- `src/features/auth`: auth server/client/session helpers
+- `src/lib/db`: Drizzle client + schema
+- `src/routes`: file-based routes (including protected routes)
+- `src/styles.css`: Tailwind setup
 
-This project uses [Vitest](https://vitest.dev/) for testing. You can run the tests with:
+## Next steps
 
-```bash
-bun --bun run test
-```
+- Setup Shadcn/ui: `bunx --bun shadcn@latest init`
+- Add your own routes in `src/routes`
+- Add additional OAuth providers in `src/features/auth/server.ts`
+- Create your app schema in `src/lib/db/schema.ts`
 
-## Styling
+## Learn more
 
-This project uses [Tailwind CSS](https://tailwindcss.com/) for styling.
-
-### Removing Tailwind CSS
-
-If you prefer not to use Tailwind CSS:
-
-1. Remove the demo pages in `src/routes/demo/`
-2. Replace the Tailwind import in `src/styles.css` with your own styles
-3. Remove `tailwindcss()` from the plugins array in `vite.config.ts`
-4. Uninstall the packages: `bun install @tailwindcss/vite tailwindcss -D`
-
-
-
-## Routing
-
-This project uses [TanStack Router](https://tanstack.com/router) with file-based routing. Routes are managed as files in `src/routes`.
-
-### Adding A Route
-
-To add a new route to your application just add a new file in the `./src/routes` directory.
-
-TanStack will automatically generate the content of the route file for you.
-
-Now that you have two routes you can use a `Link` component to navigate between them.
-
-### Adding Links
-
-To use SPA (Single Page Application) navigation you will need to import the `Link` component from `@tanstack/react-router`.
-
-```tsx
-import { Link } from "@tanstack/react-router";
-```
-
-Then anywhere in your JSX you can use it like so:
-
-```tsx
-<Link to="/about">About</Link>
-```
-
-This will create a link that will navigate to the `/about` route.
-
-More information on the `Link` component can be found in the [Link documentation](https://tanstack.com/router/v1/docs/framework/react/api/router/linkComponent).
-
-### Using A Layout
-
-In the File Based Routing setup the layout is located in `src/routes/__root.tsx`. Anything you add to the root route will appear in all the routes. The route content will appear in the JSX where you render `{children}` in the `shellComponent`.
-
-Here is an example layout that includes a header:
-
-```tsx
-import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
-
-export const Route = createRootRoute({
-  head: () => ({
-    meta: [
-      { charSet: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { title: 'My App' },
-    ],
-  }),
-  shellComponent: ({ children }) => (
-    <html lang="en">
-      <head>
-        <HeadContent />
-      </head>
-      <body>
-        <header>
-          <nav>
-            <Link to="/">Home</Link>
-            <Link to="/about">About</Link>
-          </nav>
-        </header>
-        {children}
-        <Scripts />
-      </body>
-    </html>
-  ),
-})
-```
-
-More information on layouts can be found in the [Layouts documentation](https://tanstack.com/router/latest/docs/framework/react/guide/routing-concepts#layouts).
-
-## Server Functions
-
-TanStack Start provides server functions that allow you to write server-side code that seamlessly integrates with your client components.
-
-```tsx
-import { createServerFn } from '@tanstack/react-start'
-
-const getServerTime = createServerFn({
-  method: 'GET',
-}).handler(async () => {
-  return new Date().toISOString()
-})
-
-// Use in a component
-function MyComponent() {
-  const [time, setTime] = useState('')
-  
-  useEffect(() => {
-    getServerTime().then(setTime)
-  }, [])
-  
-  return <div>Server time: {time}</div>
-}
-```
-
-## API Routes
-
-You can create API routes by using the `server` property in your route definitions:
-
-```tsx
-import { createFileRoute } from '@tanstack/react-router'
-import { json } from '@tanstack/react-start'
-
-export const Route = createFileRoute('/api/hello')({
-  server: {
-    handlers: {
-      GET: () => json({ message: 'Hello, World!' }),
-    },
-  },
-})
-```
-
-## Data Fetching
-
-There are multiple ways to fetch data in your application. You can use TanStack Query to fetch data from a server. But you can also use the `loader` functionality built into TanStack Router to load the data for a route before it's rendered.
-
-For example:
-
-```tsx
-import { createFileRoute } from '@tanstack/react-router'
-
-export const Route = createFileRoute('/people')({
-  loader: async () => {
-    const response = await fetch('https://swapi.dev/api/people')
-    return response.json()
-  },
-  component: PeopleComponent,
-})
-
-function PeopleComponent() {
-  const data = Route.useLoaderData()
-  return (
-    <ul>
-      {data.results.map((person) => (
-        <li key={person.name}>{person.name}</li>
-      ))}
-    </ul>
-  )
-}
-```
-
-Loaders simplify your data fetching logic dramatically. Check out more information in the [Loader documentation](https://tanstack.com/router/latest/docs/framework/react/guide/data-loading#loader-parameters).
-
-# Demo files
-
-Files prefixed with `demo` can be safely deleted. They are there to provide a starting point for you to play around with the features you've installed.
-
-# Learn More
-
-You can learn more about all of the offerings from TanStack in the [TanStack documentation](https://tanstack.com).
-
-For TanStack Start specific documentation, visit [TanStack Start](https://tanstack.com/start).
+- TanStack Start: https://tanstack.com/start
+- TanStack Router: https://tanstack.com/router
+- Better Auth: https://better-auth.com
+- Drizzle ORM: https://orm.drizzle.team
+- Tailwind CSS: https://tailwindcss.com

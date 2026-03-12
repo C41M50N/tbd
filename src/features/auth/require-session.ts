@@ -1,5 +1,5 @@
 import { redirect } from '@tanstack/react-router'
-import { getSession } from '@/lib/auth-api'
+import { getSession } from './session'
 
 const FALLBACK_REDIRECT = '/dashboard'
 

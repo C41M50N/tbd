@@ -1,7 +1,7 @@
 import { createFileRoute, redirect } from '@tanstack/react-router'
 import { useState } from 'react'
-import { authClient } from '@/lib/auth-client'
-import { getSession } from '@/lib/auth-api'
+import { authClient } from '@/features/auth/client'
+import { getSession } from '@/features/auth/session'
 
 type LoginSearch = {
   redirect?: string
