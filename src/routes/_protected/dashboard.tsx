@@ -9,9 +9,9 @@ function Dashboard() {
   const displayName = user.name ?? user.email ?? 'there'
 
   return (
-    <main className="mx-auto w-full max-w-5xl px-8 py-12">
-      <h2 className="mb-4 text-2xl font-bold">Dashboard</h2>
-      <span className="text-lg text-gray-700">
+    <main className="mx-auto w-full max-w-5xl px-6 py-12 sm:px-8">
+      <h2 className="mb-4 text-2xl font-semibold">Dashboard</h2>
+      <span className="text-base text-slate-600">
         Welcome, {displayName}!
       </span>
     </main>

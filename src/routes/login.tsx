@@ -61,12 +61,14 @@ function Login() {
 
   return (
     <main className="mx-auto flex min-h-screen w-full max-w-md items-center px-4 py-12">
-      <section className="w-full rounded-3xl border border-black/10 bg-white p-8 shadow-sm">
-        <p className="mb-2 text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
+      <section className="w-full rounded-3xl border border-black/10 bg-white/80 p-8 shadow-sm backdrop-blur">
+        <p className="mb-2 text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">
           Login
         </p>
-        <h1 className="mb-3 text-3xl font-bold text-slate-900">Sign in to continue</h1>
-        <p className="mb-6 text-sm leading-6 text-slate-600">
+        <h1 className="mb-3 text-3xl font-bold text-slate-900 sm:text-4xl">
+          Sign in to continue
+        </h1>
+        <p className="mb-6 text-base leading-7 text-slate-600">
           Use your Google account to access protected routes.
         </p>
         <Button

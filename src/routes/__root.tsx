@@ -84,11 +84,11 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 function NotFound() {
   return (
     <div className="mx-auto flex min-h-[50vh] w-full max-w-2xl flex-col items-center justify-center gap-3 px-6 text-center">
-      <p className="text-xs uppercase tracking-[0.35em] text-muted-foreground">
+      <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">
         404
       </p>
       <h1 className="text-2xl font-semibold">Page not found</h1>
-      <p className="text-sm text-muted-foreground">
+      <p className="text-base leading-7 text-slate-600">
         The page you were looking for does not exist or has moved.
       </p>
       <Link className="text-sm font-medium underline underline-offset-4" to="/">
@@ -103,14 +103,14 @@ function RootError({ error, reset }: ErrorComponentProps) {
 
   return (
     <div className="mx-auto flex min-h-[50vh] w-full max-w-2xl flex-col items-center justify-center gap-4 px-6 text-center">
-      <p className="text-xs uppercase tracking-[0.35em] text-red-500/80">
+      <p className="text-xs font-semibold uppercase tracking-[0.3em] text-red-500/80">
         Error
       </p>
       <h1 className="text-2xl font-semibold">Something went wrong</h1>
-      <p className="text-sm text-muted-foreground">
+      <p className="text-base leading-7 text-slate-600">
         Try again or head back home. If the problem persists, contact support.
       </p>
-      <div className="w-full rounded-md border border-border bg-muted/30 p-4 text-left text-sm text-muted-foreground">
+      <div className="w-full rounded-md border border-black/10 bg-white/80 p-4 text-left text-sm text-slate-600">
         {message}
       </div>
       <div className="flex flex-wrap items-center justify-center gap-3">

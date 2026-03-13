@@ -38,7 +38,7 @@ function App() {
   }
 
   return (
-    <main className="mx-auto w-full max-w-5xl px-8 py-12">
+    <main className="mx-auto w-full max-w-5xl px-6 py-12 sm:px-8">
       {session ? (
         <Button className="inline-flex" onClick={handleSignOut} disabled={isSigningOut}>
           {isSigningOut ? 'Logging out...' : 'Log out'}
