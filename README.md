@@ -78,6 +78,7 @@ bunx varlock run -- drizzle-kit migrate
 
 - TanStack Start: https://tanstack.com/start
 - TanStack Router: https://tanstack.com/router
+- TanStack Query: https://tanstack.com/query
 - Better Auth: https://better-auth.com
 - Drizzle ORM: https://orm.drizzle.team
 - Tailwind CSS: https://tailwindcss.com
