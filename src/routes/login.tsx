@@ -2,6 +2,7 @@ import { createFileRoute, redirect } from '@tanstack/react-router'
 import { useState } from 'react'
 import { authClient } from '@/features/auth/client'
 import { getSession } from '@/features/auth/session'
+import { Button } from '@/components/Button'
 
 type LoginSearch = {
   redirect?: string
@@ -68,14 +69,13 @@ function Login() {
         <p className="mb-6 text-sm leading-6 text-slate-600">
           Use your Google account to access protected routes.
         </p>
-        <button
-          type="button"
+        <Button
           onClick={handleGoogleSignIn}
           disabled={isPending}
-          className="w-full rounded-xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white transition hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-60"
+          className="w-full"
         >
           {isPending ? 'Redirecting...' : 'Continue with Google'}
-        </button>
+        </Button>
         {errorMessage ? (
           <p className="mt-4 text-sm text-red-600">{errorMessage}</p>
         ) : null}

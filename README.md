@@ -47,8 +47,8 @@ GOOGLE_CLIENT_SECRET=
 The schema entry point is `src/lib/db/schema.ts`.
 
 ```bash
-bunx drizzle-kit generate
-bunx drizzle-kit migrate
+bunx varlock run -- drizzle-kit generate
+bunx varlock run -- drizzle-kit migrate
 ```
 
 ## Scripts

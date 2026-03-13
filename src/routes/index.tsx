@@ -1,15 +1,55 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
+import { useState } from 'react'
+import { Button } from '@/components/Button'
+import { authClient } from '@/features/auth/client'
+import { getSession } from '@/features/auth/session'
 
-export const Route = createFileRoute('/')({ component: App })
+export const Route = createFileRoute('/')({
+  beforeLoad: async () => {
+    const session = await getSession()
+
+    return { session }
+  },
+  component: App,
+})
 
 function App() {
+  const { session } = Route.useRouteContext()
+  const [isSigningOut, setIsSigningOut] = useState(false)
+
+  const handleSignOut = async () => {
+    if (isSigningOut) {
+      return
+    }
+
+    setIsSigningOut(true)
+
+    try {
+      await authClient.signOut({
+        fetchOptions: {
+          onSuccess: () => {
+            window.location.assign('/')
+          },
+        },
+      })
+    } finally {
+      setIsSigningOut(false)
+    }
+  }
+
   return (
-    <main className="mx-auto w-full px-4 pb-8 pt-14">
-      <button type='button' className="inline-flex rounded bg-green-500 px-4 py-2 text-white">
-        <Link to="/login" className="inline-flex rounded bg-blue-500 px-4 py-2 text-white">
-          Sign In
+    <main className="mx-auto w-full max-w-5xl px-8 py-12">
+      {session ? (
+        <Button className="inline-flex" onClick={handleSignOut} disabled={isSigningOut}>
+          {isSigningOut ? 'Logging out...' : 'Log out'}
+        </Button>
+      ) : (
+        <Link to="/login">
+          <Button className="inline-flex">
+            Sign In
+          </Button>
         </Link>
-      </button>
+      )}
     </main>
   )
 }

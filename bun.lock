@@ -31,7 +31,7 @@
         "@types/pg": "^8.18.0",
         "@types/react": "^19.2.0",
         "@types/react-dom": "^19.2.0",
-        "@varlock/vite-integration": "^0.2.3",
+        "@varlock/vite-integration": "^0.2.4",
         "@vitejs/plugin-react": "^5.1.4",
         "drizzle-kit": "^0.31.9",
         "jsdom": "^28.1.0",
@@ -441,7 +441,7 @@
 
     "@types/whatwg-url": ["@types/whatwg-url@13.0.0", "", { "dependencies": { "@types/webidl-conversions": "*" } }, "sha512-N8WXpbE6Wgri7KUSvrmQcqrMllKZ9uxkYWMt+mCSGwNc0Hsw9VQTW7ApqI4XNrx6/SaM2QQJCzMPDEXE058s+Q=="],
 
-    "@varlock/vite-integration": ["@varlock/vite-integration@0.2.3", "", { "peerDependencies": { "varlock": "^0.4.0", "vite": ">=5" } }, "sha512-d6GlcHpllZuPfkQ5n4AV6aTpVzdxZqxQVO1C0N+qTSGU4faKv7UaH3tPGJS/JocMzSDH1/mXR2Zlf55ErO2O9A=="],
+    "@varlock/vite-integration": ["@varlock/vite-integration@0.2.4", "", { "peerDependencies": { "varlock": "^0.4.2", "vite": ">=5" } }, "sha512-4hyJ+5Hwrxa2qkTbJehtnX1JlG6CFQYYhxrywmunHN/bADgGSEuRjKaaR2wm1fEALCJH+2OH1+7WHJLWncFeEw=="],
 
     "@vitejs/plugin-react": ["@vitejs/plugin-react@5.1.4", "", { "dependencies": { "@babel/core": "^7.29.0", "@babel/plugin-transform-react-jsx-self": "^7.27.1", "@babel/plugin-transform-react-jsx-source": "^7.27.1", "@rolldown/pluginutils": "1.0.0-rc.3", "@types/babel__core": "^7.20.5", "react-refresh": "^0.18.0" }, "peerDependencies": { "vite": "^4.2.0 || ^5.0.0 || ^6.0.0 || ^7.0.0" } }, "sha512-VIcFLdRi/VYRU8OL/puL7QXMYafHmqOnwTZY50U1JPlCNj30PxCMx65c494b1K9be9hX83KVt0+gTEwTWLqToA=="],
 

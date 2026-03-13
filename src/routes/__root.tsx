@@ -1,8 +1,18 @@
-import { HeadContent, Link, Scripts, createRootRoute } from '@tanstack/react-router'
+import {
+  HeadContent,
+  Link,
+  Outlet,
+  Scripts,
+  createRootRoute,
+  useRouterState,
+  type ErrorComponentProps,
+} from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
 
 import appCss from '../styles.css?url'
+import { Header } from '../components/Header'
+import { Button } from '../components/Button'
 
 export const Route = createRootRoute({
   head: () => ({
@@ -26,8 +36,25 @@ export const Route = createRootRoute({
     ],
   }),
   notFoundComponent: NotFound,
+  errorComponent: RootError,
   shellComponent: RootDocument,
+  component: RootLayout,
 })
+
+function RootLayout() {
+  const pathname = useRouterState({
+    select: (state) => state.location.pathname,
+  })
+
+  const showHeader = pathname !== '/login'
+
+  return (
+    <>
+      {showHeader ? <Header /> : null}
+      <Outlet />
+    </>
+  )
+}
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
@@ -67,6 +94,33 @@ function NotFound() {
       <Link className="text-sm font-medium underline underline-offset-4" to="/">
         Back to home
       </Link>
+    </div>
+  )
+}
+
+function RootError({ error, reset }: ErrorComponentProps) {
+  const message = error instanceof Error ? error.message : 'Unexpected error'
+
+  return (
+    <div className="mx-auto flex min-h-[50vh] w-full max-w-2xl flex-col items-center justify-center gap-4 px-6 text-center">
+      <p className="text-xs uppercase tracking-[0.35em] text-red-500/80">
+        Error
+      </p>
+      <h1 className="text-2xl font-semibold">Something went wrong</h1>
+      <p className="text-sm text-muted-foreground">
+        Try again or head back home. If the problem persists, contact support.
+      </p>
+      <div className="w-full rounded-md border border-border bg-muted/30 p-4 text-left text-sm text-muted-foreground">
+        {message}
+      </div>
+      <div className="flex flex-wrap items-center justify-center gap-3">
+        <Button variant="outline" onClick={reset}>
+          Try again
+        </Button>
+        <Link className="text-sm font-medium underline underline-offset-4" to="/">
+          Back to home
+        </Link>
+      </div>
     </div>
   )
 }
