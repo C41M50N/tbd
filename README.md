@@ -25,7 +25,7 @@ bun run dev
 
 ## Environment variables
 
-Create a `.env` file in the project root (see `.env.example`):
+Create a `.env` file in the project root (see `.env.schema`):
 
 ```
 DATABASE_URL=
@@ -35,10 +35,12 @@ GOOGLE_CLIENT_ID=
 GOOGLE_CLIENT_SECRET=
 ```
 
+`.env.schema` is the source of truth for env vars and is used by varlock to generate `env.d.ts`.
+
 ## Auth setup
 
 - Auth handler lives at `/api/auth/*`.
-- Update your OAuth callback URLs to match your local and production origins.
+- Update your OAuth callback URLs to match your local and production origins (for Google: `http://localhost:3000/api/auth/callback/google`).
 - Server auth code is in `src/features/auth/server.ts`.
 - Client auth code is in `src/features/auth/client.ts`.
 
