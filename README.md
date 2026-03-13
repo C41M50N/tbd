@@ -26,7 +26,7 @@ bun run dev
 
 ## Environment variables
 
-Create a `.env` file in the project root (see `.env.schema`):
+Create a `.env.local` file in the project root (see `.env.schema`):
 
 ```
 DATABASE_URL=
