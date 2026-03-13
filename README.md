@@ -64,6 +64,7 @@ bunx varlock run -- drizzle-kit migrate
 
 - `src/features/auth`: auth server/client/session helpers
 - `src/lib/db`: Drizzle client + schema
+- `src/lib/tanstack-query`: TanStack Query client setup
 - `src/routes`: file-based routes (including protected routes)
 - `src/styles.css`: Tailwind setup
 
