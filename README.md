@@ -6,7 +6,7 @@ A practical starter for building a TanStack Start app with authentication, Postg
 
 - Devs evaluating TanStack Start with a real auth + DB setup
 - Teams that want a clean foundation without a heavy UI kit
-- Anyone who wants file-based routing, typed data loaders, and a straightforward auth flow
+- Anyone who wants type-safe routing, typed data loaders, and a straightforward auth flow
 
 ## What is included
 
