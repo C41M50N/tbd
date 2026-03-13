@@ -11,6 +11,7 @@ A practical starter for building a TanStack Start app with authentication, Postg
 ## What is included
 
 - TanStack Start + Router file-based routing
+- TanStack Query (installed, not used by default to keep the template lean)
 - Better Auth with Google provider and server handler route
 - Drizzle ORM schema + migrations wiring for PostgreSQL
 - Tailwind CSS v4 setup
