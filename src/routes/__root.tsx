@@ -3,7 +3,7 @@ import {
   Link,
   Outlet,
   Scripts,
-  createRootRoute,
+  createRootRouteWithContext,
   useRouterState,
   type ErrorComponentProps,
 } from '@tanstack/react-router'
@@ -14,8 +14,13 @@ import { TanStackDevtools } from '@tanstack/react-devtools'
 import appCss from '../styles.css?url'
 import { Header } from '../components/Header'
 import { Button } from '../components/Button'
+import type { QueryClient } from '@tanstack/react-query'
 
-export const Route = createRootRoute({
+interface MyRouterContext {
+  queryClient: QueryClient
+}
+
+export const Route = createRootRouteWithContext<MyRouterContext>()({
   head: () => ({
     meta: [
       {
