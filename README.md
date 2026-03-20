@@ -1,6 +1,6 @@
-TanStack Start + Better Auth + Drizzle + Tailwind Starter
+TanStack Start + Better Auth + Drizzle Starter
 
-A practical starter for building a TanStack Start app with authentication, PostgreSQL, and modern styling. It includes a minimal auth flow, protected routes, and a Drizzle schema layout so you can ship quickly.
+A practical starter for building a TanStack Start app with authentication, database ORM, and modern styling.
 
 ## Who this is for
 
