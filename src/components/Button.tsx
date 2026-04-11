@@ -1,18 +1,18 @@
-import type { ButtonHTMLAttributes } from 'react'
+import type { ButtonHTMLAttributes } from 'react';
 
-type ButtonVariant = 'default' | 'outline'
+type ButtonVariant = 'default' | 'outline';
 
 export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: ButtonVariant
-}
+  variant?: ButtonVariant;
+};
 
-const baseClasses = 'enabled:cursor-pointer'
+const baseClasses = 'enabled:cursor-pointer';
 
 const variantClasses: Record<ButtonVariant, string> = {
   default:
     'rounded-md bg-slate-900 px-4 py-3 text-sm font-semibold text-white transition hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-60',
   outline: 'rounded-md border border-black/10 px-4 py-2 text-sm font-medium',
-}
+};
 
 export function Button({
   variant = 'default',
@@ -22,7 +22,7 @@ export function Button({
 }: ButtonProps) {
   const classes = [baseClasses, variantClasses[variant], className]
     .filter(Boolean)
-    .join(' ')
+    .join(' ');
 
-  return <button type={type} className={classes} {...props} />
+  return <button type={type} className={classes} {...props} />;
 }

@@ -1,9 +1,10 @@
-import { betterAuth } from 'better-auth'
-import { drizzleAdapter } from 'better-auth/adapters/drizzle'
-import { tanstackStartCookies } from 'better-auth/tanstack-start'
-import { ENV } from 'varlock/env'
-import { db } from '@/lib/db'
-import * as authSchema from '@/lib/db/auth-schema'
+import { betterAuth } from 'better-auth';
+import { drizzleAdapter } from 'better-auth/adapters/drizzle';
+import { tanstackStartCookies } from 'better-auth/tanstack-start';
+import { ENV } from 'varlock/env';
+
+import { db } from '@/lib/db';
+import * as authSchema from '@/lib/db/auth-schema';
 
 export const auth = betterAuth({
   secret: ENV.BETTER_AUTH_SECRET,
@@ -19,4 +20,4 @@ export const auth = betterAuth({
     },
   },
   plugins: [tanstackStartCookies()], // make sure this is the last plugin in the array
-})
+});

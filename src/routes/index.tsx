@@ -1,55 +1,58 @@
-import { Link, createFileRoute } from '@tanstack/react-router'
-import { useState } from 'react'
-import { Button } from '@/components/Button'
-import { authClient } from '@/features/auth/client'
-import { getSession } from '@/features/auth/session'
+import { Link, createFileRoute } from '@tanstack/react-router';
+import { useState } from 'react';
+
+import { Button } from '@/components/Button';
+import { authClient } from '@/features/auth/client';
+import { getSession } from '@/features/auth/session';
 
 export const Route = createFileRoute('/')({
   beforeLoad: async () => {
-    const session = await getSession()
+    const session = await getSession();
 
-    return { session }
+    return { session };
   },
   component: App,
-})
+});
 
 function App() {
-  const { session } = Route.useRouteContext()
-  const [isSigningOut, setIsSigningOut] = useState(false)
+  const { session } = Route.useRouteContext();
+  const [isSigningOut, setIsSigningOut] = useState(false);
 
   const handleSignOut = async () => {
     if (isSigningOut) {
-      return
+      return;
     }
 
-    setIsSigningOut(true)
+    setIsSigningOut(true);
 
     try {
       await authClient.signOut({
         fetchOptions: {
           onSuccess: () => {
-            window.location.assign('/')
+            window.location.assign('/');
           },
         },
-      })
+      });
     } finally {
-      setIsSigningOut(false)
+      setIsSigningOut(false);
     }
-  }
+  };
 
   return (
     <main className="mx-auto w-full max-w-5xl px-6 py-12 sm:px-8">
       {session ? (
-        <Button className="inline-flex" onClick={handleSignOut} disabled={isSigningOut}>
+        <Button
+          className="inline-flex"
+          onClick={handleSignOut}
+          disabled={isSigningOut}
+        >
           {isSigningOut ? 'Logging out...' : 'Log out'}
         </Button>
       ) : (
         <Link to="/login">
-          <Button className="inline-flex">
-            Sign In
-          </Button>
+          <Button className="inline-flex">Sign In</Button>
         </Link>
       )}
     </main>
-  )
+  );
 }

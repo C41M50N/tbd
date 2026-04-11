@@ -1,25 +1,26 @@
-import { createFileRoute, redirect } from '@tanstack/react-router'
-import { useState } from 'react'
-import { authClient } from '@/features/auth/client'
-import { getSession } from '@/features/auth/session'
-import { Button } from '@/components/Button'
+import { createFileRoute, redirect } from '@tanstack/react-router';
+import { useState } from 'react';
+
+import { Button } from '@/components/Button';
+import { authClient } from '@/features/auth/client';
+import { getSession } from '@/features/auth/session';
 
 type LoginSearch = {
-  redirect?: string
-}
+  redirect?: string;
+};
 
-const FALLBACK_REDIRECT = '/dashboard'
+const FALLBACK_REDIRECT = '/dashboard';
 
 function getSafeRedirect(redirectTo?: string) {
   if (!redirectTo) {
-    return FALLBACK_REDIRECT
+    return FALLBACK_REDIRECT;
   }
 
   if (!redirectTo.startsWith('/') || redirectTo.startsWith('//')) {
-    return FALLBACK_REDIRECT
+    return FALLBACK_REDIRECT;
   }
 
-  return redirectTo
+  return redirectTo;
 }
 
 export const Route = createFileRoute('/login')({
@@ -27,37 +28,37 @@ export const Route = createFileRoute('/login')({
     redirect: typeof search.redirect === 'string' ? search.redirect : undefined,
   }),
   beforeLoad: async ({ search }) => {
-    const session = await getSession()
+    const session = await getSession();
 
     if (session) {
       throw redirect({
         href: getSafeRedirect(search.redirect),
-      })
+      });
     }
   },
   component: Login,
-})
+});
 
 function Login() {
-  const search = Route.useSearch()
-  const [isPending, setIsPending] = useState(false)
-  const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const search = Route.useSearch();
+  const [isPending, setIsPending] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleGoogleSignIn = async () => {
-    setIsPending(true)
-    setErrorMessage(null)
+    setIsPending(true);
+    setErrorMessage(null);
 
-    const callbackURL = getSafeRedirect(search.redirect)
+    const callbackURL = getSafeRedirect(search.redirect);
     const { error } = await authClient.signIn.social({
       provider: 'google',
       callbackURL,
-    })
+    });
 
     if (error) {
-      setIsPending(false)
-      setErrorMessage(error.message || 'Unable to sign in right now.')
+      setIsPending(false);
+      setErrorMessage(error.message || 'Unable to sign in right now.');
     }
-  }
+  };
 
   return (
     <main className="mx-auto flex min-h-screen w-full max-w-md items-center px-4 py-12">
@@ -83,5 +84,5 @@ function Login() {
         ) : null}
       </section>
     </main>
-  )
+  );
 }

@@ -1,3 +1,6 @@
+import { TanStackDevtools } from '@tanstack/react-devtools';
+import type { QueryClient } from '@tanstack/react-query';
+import { ReactQueryDevtoolsPanel } from '@tanstack/react-query-devtools';
 import {
   HeadContent,
   Link,
@@ -6,18 +9,16 @@ import {
   createRootRouteWithContext,
   useRouterState,
   type ErrorComponentProps,
-} from '@tanstack/react-router'
-import { ReactQueryDevtoolsPanel } from '@tanstack/react-query-devtools'
-import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
-import { TanStackDevtools } from '@tanstack/react-devtools'
+} from '@tanstack/react-router';
+import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools';
 
-import appCss from '../styles.css?url'
-import { Header } from '../components/Header'
-import { Button } from '../components/Button'
-import type { QueryClient } from '@tanstack/react-query'
+import { Button } from '../components/Button';
+import { Header } from '../components/Header';
+
+import appCss from '../styles.css?url';
 
 interface MyRouterContext {
-  queryClient: QueryClient
+  queryClient: QueryClient;
 }
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
@@ -45,21 +46,21 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
   errorComponent: RootError,
   shellComponent: RootDocument,
   component: RootLayout,
-})
+});
 
 function RootLayout() {
   const pathname = useRouterState({
     select: (state) => state.location.pathname,
-  })
+  });
 
-  const showHeader = pathname !== '/login'
+  const showHeader = pathname !== '/login';
 
   return (
     <>
       {showHeader ? <Header /> : null}
       <Outlet />
     </>
-  )
+  );
 }
 
 function RootDocument({ children }: { children: React.ReactNode }) {
@@ -82,13 +83,13 @@ function RootDocument({ children }: { children: React.ReactNode }) {
             {
               name: 'Tanstack Query',
               render: <ReactQueryDevtoolsPanel />,
-            }
+            },
           ]}
         />
         <Scripts />
       </body>
     </html>
-  )
+  );
 }
 
 function NotFound() {
@@ -105,11 +106,11 @@ function NotFound() {
         Back to home
       </Link>
     </div>
-  )
+  );
 }
 
 function RootError({ error, reset }: ErrorComponentProps) {
-  const message = error instanceof Error ? error.message : 'Unexpected error'
+  const message = error instanceof Error ? error.message : 'Unexpected error';
 
   return (
     <div className="mx-auto flex min-h-[50vh] w-full max-w-2xl flex-col items-center justify-center gap-4 px-6 text-center">
@@ -127,10 +128,13 @@ function RootError({ error, reset }: ErrorComponentProps) {
         <Button variant="outline" onClick={reset}>
           Try again
         </Button>
-        <Link className="text-sm font-medium underline underline-offset-4" to="/">
+        <Link
+          className="text-sm font-medium underline underline-offset-4"
+          to="/"
+        >
           Back to home
         </Link>
       </div>
     </div>
-  )
+  );
 }
