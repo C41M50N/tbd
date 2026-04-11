@@ -1,0 +1,26 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": [
+    "typescript",
+    "unicorn",
+    "oxc",
+    "react",
+    "react-perf"
+  ],
+  "categories": {
+    "correctness": "error"
+  },
+  "ignorePatterns": [
+    "dist",
+    "dist-ssr",
+    ".tanstack",
+    ".vinxi",
+    ".vscode",
+    "env.d.ts",
+    "src/routeTree.gen.ts"
+  ],
+  "rules": {},
+  "env": {
+    "builtin": true
+  }
+}

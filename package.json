@@ -5,6 +5,8 @@
   "scripts": {
     "dev": "vite dev --port 3000",
     "build": "vite build",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
     "preview": "vite preview",
     "test": "vitest run"
   },
@@ -41,6 +43,7 @@
     "@vitejs/plugin-react": "^5.1.4",
     "drizzle-kit": "^0.31.9",
     "jsdom": "^28.1.0",
+    "oxlint": "^1.59.0",
     "typescript": "^5.7.2",
     "vite": "^7.3.1",
     "vite-tsconfig-paths": "^5.1.4",
