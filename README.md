@@ -15,6 +15,8 @@ A practical starter for building a TanStack Start app with authentication, datab
 - Better Auth with Google provider and server handler route
 - Drizzle ORM schema + migrations wiring for PostgreSQL
 - Tailwind CSS v4 setup
+- Oxlint for linting
+- Oxfmt for formatting
 - Protected routes + login flow
 
 ## Quick start
@@ -58,7 +60,13 @@ bunx varlock run -- drizzle-kit migrate
 
 - Dev server: `bun run dev`
 - Production build: `bun run build`
+- Lint: `bun run lint`
+- Lint with fixes: `bun run lint:fix`
+- Format: `bun run fmt`
+- Format (check only): `bun run fmt:check`
 - Tests: `bun run test`
+
+Linting is configured in `.oxlintrc.json` and formatting is configured in `.oxfmtrc.json`.
 
 ## Project structure
 
@@ -83,3 +91,5 @@ bunx varlock run -- drizzle-kit migrate
 - Better Auth: https://better-auth.com
 - Drizzle ORM: https://orm.drizzle.team
 - Tailwind CSS: https://tailwindcss.com
+- Oxlint: https://oxc.rs/docs/guide/usage/linter.html
+- Oxfmt: https://oxc.rs/docs/guide/usage/formatter.html
