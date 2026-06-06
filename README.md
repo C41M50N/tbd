@@ -1,4 +1,4 @@
-TanStack Start + Better Auth + Drizzle Starter
+**T**anStack Start + **B**etter Auth + **D**rizzle Starter
 
 A practical starter for building a TanStack Start app with authentication, database ORM, and modern styling.
 
