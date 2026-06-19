@@ -11,7 +11,7 @@ A practical starter for building a TanStack Start app with authentication, datab
 ## What is included
 
 - TanStack Start + Router file-based routing
-- TanStack Query (installed, not used by default to keep the template lean)
+- TanStack Query wired into router SSR (not used by default to keep the template lean)
 - Better Auth with Google provider and server handler route
 - Drizzle ORM schema + migrations wiring for PostgreSQL
 - Tailwind CSS v4 setup
@@ -82,7 +82,7 @@ Linting is configured in `.oxlintrc.json` and formatting is configured in `.oxfm
 
 - `src/features/auth`: auth server/client/session/middleware helpers
 - `src/lib/db`: Drizzle client + schema
-- `src/lib/tanstack-query`: TanStack Query client setup
+- `src/router.tsx`: router setup, including TanStack Query SSR integration
 - `src/routes`: file-based routes (including protected routes)
 - `src/styles.css`: Tailwind setup
 
