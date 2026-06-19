@@ -10,7 +10,11 @@
     "fmt": "oxfmt",
     "fmt:check": "oxfmt --check",
     "preview": "vite preview",
-    "test": "vitest run"
+    "test": "vitest run",
+    "db:generate": "varlock run -- drizzle-kit generate",
+    "db:migrate": "varlock run -- drizzle-kit migrate",
+    "db:push": "varlock run -- drizzle-kit push",
+    "db:studio": "varlock run -- drizzle-kit studio"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.18",

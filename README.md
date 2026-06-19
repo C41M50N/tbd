@@ -49,14 +49,17 @@ GOOGLE_CLIENT_SECRET=
 - Update your OAuth callback URLs to match your local and production origins (for Google locally: `https://tbd.localhost/api/auth/callback/google`).
 - Server auth code is in `src/features/auth/server.ts`.
 - Client auth code is in `src/features/auth/client.ts`.
+- Server function auth middleware is in `src/features/auth/middleware.ts`.
 
 ## Database + Drizzle
 
 The schema entry point is `src/lib/db/schema.ts`.
 
 ```bash
-bunx varlock run -- drizzle-kit generate
-bunx varlock run -- drizzle-kit migrate
+bun run db:generate
+bun run db:migrate
+bun run db:push
+bun run db:studio
 ```
 
 ## Scripts
@@ -68,12 +71,16 @@ bunx varlock run -- drizzle-kit migrate
 - Format: `bun run fmt`
 - Format (check only): `bun run fmt:check`
 - Tests: `bun run test`
+- Generate Drizzle migrations: `bun run db:generate`
+- Run Drizzle migrations: `bun run db:migrate`
+- Push schema changes: `bun run db:push`
+- Open Drizzle Studio: `bun run db:studio`
 
 Linting is configured in `.oxlintrc.json` and formatting is configured in `.oxfmtrc.json`.
 
 ## Project structure
 
-- `src/features/auth`: auth server/client/session helpers
+- `src/features/auth`: auth server/client/session/middleware helpers
 - `src/lib/db`: Drizzle client + schema
 - `src/lib/tanstack-query`: TanStack Query client setup
 - `src/routes`: file-based routes (including protected routes)
