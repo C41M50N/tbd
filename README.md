@@ -85,6 +85,7 @@ Linting is configured in `.oxlintrc.json` and formatting is configured in `.oxfm
 - `src/router.tsx`: router setup, including TanStack Query SSR integration
 - `src/routes`: file-based routes (including protected routes)
 - `src/styles.css`: Tailwind setup
+- `docs/tech-stack`: stack notes and conventions
 
 ## Next steps
 
