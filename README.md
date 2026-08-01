@@ -66,6 +66,7 @@ bun run db:studio
 
 - Dev server: `bun run dev`
 - Production build: `bun run build`
+- Production server: `bun run start`
 - Lint: `bun run lint`
 - Lint with fixes: `bun run lint:fix`
 - Format: `bun run fmt`
@@ -77,6 +78,36 @@ bun run db:studio
 - Open Drizzle Studio: `bun run db:studio`
 
 Linting is configured in `.oxlintrc.json` and formatting is configured in `.oxfmtrc.json`.
+
+## Deployment
+
+Build and run the provider-neutral Docker image with the environment variables
+from `.env.schema`:
+
+```bash
+varlock run -- docker build \
+  --build-arg DATABASE_URL \
+  --build-arg BETTER_AUTH_SECRET \
+  --build-arg BETTER_AUTH_URL \
+  --build-arg GOOGLE_CLIENT_ID \
+  --build-arg GOOGLE_CLIENT_SECRET \
+  -t tbd .
+docker run --env-file .env.local -p 3000:3000 tbd
+```
+
+The image runs the TanStack Start server with `srvx`, serves the built client
+assets, listens on the provider-supplied `PORT` (default `3000`), and includes
+an HTTP health check. Varlock validates required variables during both the
+image build and server startup. Run migrations before each release with
+`bun run db:migrate` in the release environment.
+
+### Optional: Railway
+
+`railway.json` is an example Railway configuration. It builds the same
+Dockerfile, runs `bun run db:migrate` before deployment, checks `/` for health,
+and restarts failed processes. Add every variable from `.env.schema` to the
+Railway service; Railway makes them available to the Docker build and the
+running container.
 
 ## Project structure
 
