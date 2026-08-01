@@ -117,6 +117,7 @@ running container.
 - `src/routes`: file-based routes (including protected routes)
 - `src/styles.css`: Tailwind setup
 - `docs/tech-stack`: stack notes and conventions
+- `docs/recipes`: worked examples that can be copied into the starter when needed
 
 ## Next steps
 

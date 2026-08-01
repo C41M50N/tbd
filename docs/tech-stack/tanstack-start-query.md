@@ -61,3 +61,7 @@ export function itemDetailQueryKey(itemId: string) {
 ```
 
 Keep related query option factories and cache helpers near the feature that owns the server state.
+
+## Worked example
+
+See [Authenticated notes](../recipes/notes.md) for a complete, small vertical slice with Zod-validated server functions, ownership-scoped database predicates, feature-owned query options, Router preloading, and targeted mutation cache updates.
