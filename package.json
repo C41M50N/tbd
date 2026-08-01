@@ -10,6 +10,8 @@
     "lint:fix": "oxlint --fix",
     "fmt": "oxfmt",
     "fmt:check": "oxfmt --check",
+    "typecheck": "tsc --noEmit",
+    "check": "bun run fmt:check && bun run lint && bun run typecheck && bun run test",
     "preview": "vite preview",
     "test": "vitest run",
     "db:generate": "varlock run -- drizzle-kit generate",
