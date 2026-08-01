@@ -1,0 +1,22 @@
+# [Project name]
+
+> Replace every bracketed field before renaming this file to `AGENTS.md`.
+
+## Project intent
+
+[Explain what the project does, who it serves, and the outcome it is meant to
+create. Mention the current scope and any important quality bar.]
+
+## Architectural invariants
+
+- [State a boundary or behavior that every implementation must preserve.]
+- [Name all paths or representations that must remain consistent.]
+- [Call out an invalid state, dependency direction, or ownership rule.]
+
+## Verification
+
+Run these exact commands before considering a change complete:
+
+- `[typecheck command]`
+- `[test command]`
+- `[format/lint command]`
