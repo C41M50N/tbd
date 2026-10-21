@@ -11,6 +11,7 @@ A practical starter for building a TanStack Start app with authentication, datab
 ## What is included
 
 - TanStack Start + Router file-based routing
+- Server-rendered public pages, client-rendered app routes (see `docs/tech-stack/tanstack-start-router.md`)
 - TanStack Query wired into router SSR (not used by default to keep the template lean)
 - Better Auth with Google provider and server handler route
 - Drizzle ORM schema + migrations wiring for PostgreSQL
