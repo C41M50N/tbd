@@ -102,13 +102,18 @@ an HTTP health check. Varlock validates required variables during both the
 image build and server startup. Run migrations before each release with
 `bun run db:migrate` in the release environment.
 
-### Optional: Railway
+### Recommended: Railway
 
-`railway.json` is an example Railway configuration. It builds the same
-Dockerfile, runs `bun run db:migrate` before deployment, checks `/` for health,
-and restarts failed processes. Add every variable from `.env.schema` to the
-Railway service; Railway makes them available to the Docker build and the
-running container.
+Railway is the recommended host. Rather than shipping a provisioning script,
+hand the setup to your coding agent once you have a Railway account and the
+CLI installed:
+
+> Set up Railway IaC (`.railway/railway.ts`) for this project. Build from the
+> Dockerfile, run `bun run db:migrate` as the pre-deploy command, health check
+> `/`, restart on failure, and add every variable from `.env.schema` as a
+> service variable.
+
+Then review with `railway config plan` and apply.
 
 ## Project structure
 
@@ -123,6 +128,8 @@ running container.
 ## Next steps
 
 - Setup Shadcn/ui: `bunx --bun shadcn@latest init`
+- Deploy: tell your agent to set up Railway IaC for this project (see
+  [Recommended: Railway](#recommended-railway))
 - Add your own routes in `src/routes`
 - Add additional OAuth providers in `src/features/auth/server.ts`
 - Create your app schema in `src/lib/db/schema.ts`
