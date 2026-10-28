@@ -23,10 +23,14 @@ A practical starter for building a TanStack Start app with authentication, datab
 
 ## Quick start
 
+Install [Node.js 24 or newer](https://nodejs.org/en/download) and [Bun](https://bun.sh). `bun run` respects Vite's `node` shebang, so the dev server and build run on Node; `.nvmrc` selects the right version for nvm users (`nvm install && nvm use`).
+
 ```bash
 bun install
 bun run dev
 ```
+
+Installing also points Git at `.githooks`, where a pre-commit hook formats and lint-fixes the staged files.
 
 The dev script runs Vite through `portless`, so the app is available at `https://tbd.localhost` instead of a fixed `localhost:<port>` URL. On first run, `portless` may prompt to trust its local certificate and start the local proxy.
 
@@ -66,6 +70,7 @@ bun run db:studio
 ## Scripts
 
 - Dev server: `bun run dev`
+- All checks (format, lint, typecheck, test): `bun run check`
 - Production build: `bun run build`
 - Production server: `bun run start`
 - Lint: `bun run lint`
@@ -77,6 +82,8 @@ bun run db:studio
 - Run Drizzle migrations: `bun run db:migrate`
 - Push schema changes: `bun run db:push`
 - Open Drizzle Studio: `bun run db:studio`
+
+`db:generate` writes a new migration under `drizzle/`. Run it only when you have intentionally changed the schema, and commit the result; `db:migrate` applies committed migrations.
 
 Linting is configured in `.oxlintrc.json` and formatting is configured in `.oxfmtrc.json`.
 
@@ -98,7 +105,8 @@ docker run --env-file .env.local -p 3000:3000 tbd
 
 The image runs the TanStack Start server with `srvx`, serves the built client
 assets, listens on the provider-supplied `PORT` (default `3000`), and includes
-an HTTP health check. Varlock validates required variables during both the
+an HTTP health check against `/api/health`, which confirms the database is
+reachable and returns `200` or `503` without connection details. Varlock validates required variables during both the
 image build and server startup. Run migrations before each release with
 `bun run db:migrate` in the release environment.
 
@@ -110,7 +118,7 @@ CLI installed:
 
 > Set up Railway IaC (`.railway/railway.ts`) for this project. Build from the
 > Dockerfile, run `bun run db:migrate` as the pre-deploy command, health check
-> `/`, restart on failure, and add every variable from `.env.schema` as a
+> `/api/health`, restart on failure, and add every variable from `.env.schema` as a
 > service variable.
 
 Then review with `railway config plan` and apply.
@@ -119,6 +127,8 @@ Then review with `railway config plan` and apply.
 
 - `src/features/auth`: auth server/client/session/middleware helpers
 - `src/lib/db`: Drizzle client + schema
+- `src/lib/errors.ts`: `UserFacingError` and `withUserFacingErrors` for server functions, so only intended messages reach the client
+- `src/routes/api/health.ts`: database-aware health check used by the Docker image and the host
 - `src/router.tsx`: router setup, including TanStack Query SSR integration
 - `src/routes`: file-based routes (including protected routes)
 - `src/styles.css`: Tailwind setup

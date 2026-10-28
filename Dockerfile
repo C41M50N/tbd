@@ -1,4 +1,4 @@
-FROM oven/bun:1.3.14-alpine
+FROM oven/bun:1.4.4-alpine
 
 WORKDIR /app
 
@@ -22,6 +22,6 @@ RUN bun run build
 EXPOSE 3000
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-  CMD wget -qO- "http://127.0.0.1:${PORT:-3000}/" >/dev/null || exit 1
+  CMD wget -qO- "http://127.0.0.1:${PORT:-3000}/api/health" >/dev/null || exit 1
 
 CMD ["bun", "run", "start"]

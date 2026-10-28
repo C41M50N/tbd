@@ -57,6 +57,7 @@ import { and, desc, eq } from 'drizzle-orm';
 
 import { db } from '@/lib/db';
 import { noteTable } from '@/lib/db/note-schema';
+import { UserFacingError } from '@/lib/errors';
 
 function ownedNote(userId: string, noteId: string) {
   return and(eq(noteTable.userId, userId), eq(noteTable.id, noteId));
@@ -78,19 +79,19 @@ export async function updateMyNote(input: { userId: string; noteId: string; body
     .where(ownedNote(input.userId, input.noteId))
     .returning();
 
-  if (!note) throw new Error('Note not found');
+  if (!note) throw new UserFacingError('Note not found');
   return note;
 }
 
 export async function deleteMyNote(input: { userId: string; noteId: string }) {
   const [note] = await db.delete(noteTable).where(ownedNote(input.userId, input.noteId)).returning();
 
-  if (!note) throw new Error('Note not found');
+  if (!note) throw new UserFacingError('Note not found');
   return note;
 }
 ```
 
-Returning the same not-found error for a missing note and another user's note avoids revealing whether another user's ID exists.
+Returning the same not-found error for a missing note and another user's note avoids revealing whether another user's ID exists. It is a `UserFacingError` because the message is meant for the client; the next step treats every other error as internal.
 
 ## 3. Authenticate and validate the server boundary
 
@@ -102,6 +103,7 @@ import { z } from 'zod';
 
 import { requireAuthMiddleware } from '@/features/auth/middleware';
 import { createMyNote, deleteMyNote, listMyNotes, updateMyNote } from '@/features/notes/server';
+import { withUserFacingErrors } from '@/lib/errors';
 
 const noteBodySchema = z.object({
   body: z.string().trim().min(1).max(2_000),
@@ -118,22 +120,30 @@ export const listNotes = createServerFn({ method: 'GET' })
 export const createNote = createServerFn({ method: 'POST' })
   .middleware([requireAuthMiddleware])
   .validator(noteBodySchema)
-  .handler(({ context: { auth }, data }) => createMyNote({ userId: auth.userId, body: data.body }));
+  .handler(({ context: { auth }, data }) =>
+    withUserFacingErrors('Could not save the note', () => createMyNote({ userId: auth.userId, body: data.body })),
+  );
 
 export const updateNote = createServerFn({ method: 'POST' })
   .middleware([requireAuthMiddleware])
   .validator(noteIdSchema.extend(noteBodySchema.shape))
   .handler(({ context: { auth }, data }) =>
-    updateMyNote({ userId: auth.userId, noteId: data.noteId, body: data.body }),
+    withUserFacingErrors('Could not save the note', () =>
+      updateMyNote({ userId: auth.userId, noteId: data.noteId, body: data.body }),
+    ),
   );
 
 export const deleteNote = createServerFn({ method: 'POST' })
   .middleware([requireAuthMiddleware])
   .validator(noteIdSchema)
-  .handler(({ context: { auth }, data }) => deleteMyNote({ userId: auth.userId, noteId: data.noteId }));
+  .handler(({ context: { auth }, data }) =>
+    withUserFacingErrors('Could not delete the note', () => deleteMyNote({ userId: auth.userId, noteId: data.noteId })),
+  );
 ```
 
 The client controls only `noteId` and `body`. The authenticated user ID comes from middleware after validation of the session.
+
+Server functions send an error's message to the client verbatim. `withUserFacingErrors` lets a `UserFacingError` through unchanged, and logs anything else on the server while the client sees only the fallback text. Without it, a failed insert could surface a database message that quotes the row.
 
 ## 4. Let the feature own Query behavior
 
@@ -250,4 +260,5 @@ The loader starts the request during navigation and SSR. `useSuspenseQuery` read
 - Include `userId` in every select, update, and delete predicate.
 - Validate IDs and bounded text at the server boundary.
 - Return a single not-found response for missing and non-owned records.
+- Wrap mutation handlers in `withUserFacingErrors` so database errors never reach the client.
 - Use a per-request `QueryClient` for SSR, as configured in `src/router.tsx`, so authenticated cache data is not shared between requests.

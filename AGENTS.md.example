@@ -13,6 +13,12 @@ create. Mention the current scope and any important quality bar.]
 - [Name all paths or representations that must remain consistent.]
 - [Call out an invalid state, dependency direction, or ownership rule.]
 
+## Database migrations
+
+Do not run `bun run db:generate` unless explicitly asked. Schema changes are
+reviewed before a migration is authored, and the generated SQL under `drizzle/`
+is committed with the change that needs it.
+
 ## Verification
 
 Run these exact commands before considering a change complete:

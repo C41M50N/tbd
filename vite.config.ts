@@ -4,17 +4,16 @@ import { tanstackStart } from '@tanstack/react-start/plugin/vite';
 import { varlockVitePlugin } from '@varlock/vite-integration';
 import viteReact from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
-import tsconfigPaths from 'vite-tsconfig-paths';
 
 const config = defineConfig({
-  plugins: [
-    devtools(),
-    tsconfigPaths({ projects: ['./tsconfig.json'] }),
-    tailwindcss(),
-    tanstackStart(),
-    viteReact(),
-    varlockVitePlugin(),
-  ],
+  server: {
+    // Devtools forwards browser logs; a second forwarder loops them.
+    forwardConsole: false,
+  },
+  resolve: {
+    tsconfigPaths: true,
+  },
+  plugins: [devtools(), tailwindcss(), tanstackStart(), viteReact(), varlockVitePlugin()],
 });
 
 export default config;

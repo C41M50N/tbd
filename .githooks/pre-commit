@@ -1,0 +1,15 @@
+#!/bin/sh
+# Formats and lint-fixes the staged files, then re-stages those same files.
+# Only staged paths are touched, so unrelated working-tree changes stay out
+# of the commit.
+set -e
+
+files=$(git diff --cached --name-only --diff-filter=ACMR)
+
+if [ -z "$files" ]; then
+  exit 0
+fi
+
+echo "$files" | xargs bun run fmt --no-error-on-unmatched-pattern
+echo "$files" | xargs bun run lint:fix
+echo "$files" | xargs git add
