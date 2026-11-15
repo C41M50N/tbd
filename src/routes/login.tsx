@@ -3,25 +3,12 @@ import { useState } from 'react';
 
 import { Button } from '@/components/Button';
 import { authClient } from '@/features/auth/client';
+import { getSafeRedirect } from '@/features/auth/safe-redirect';
 import { getSession } from '@/features/auth/session';
 
 type LoginSearch = {
   redirect?: string;
 };
-
-const FALLBACK_REDIRECT = '/dashboard';
-
-function getSafeRedirect(redirectTo?: string) {
-  if (!redirectTo) {
-    return FALLBACK_REDIRECT;
-  }
-
-  if (!redirectTo.startsWith('/') || redirectTo.startsWith('//')) {
-    return FALLBACK_REDIRECT;
-  }
-
-  return redirectTo;
-}
 
 export const Route = createFileRoute('/login')({
   validateSearch: (search): LoginSearch => ({
