@@ -1,8 +1,8 @@
 import { createFileRoute, redirect } from '@tanstack/react-router';
 import { useState } from 'react';
 
-import { Button } from '@/components/Button';
 import { authClient } from '@/features/auth/client';
+import { GoogleSignInButton } from '@/features/auth/GoogleSignInButton';
 import { getSafeRedirect } from '@/features/auth/safe-redirect';
 import { getSession } from '@/features/auth/session';
 
@@ -59,13 +59,12 @@ function Login() {
         <p className="mb-6 text-base leading-7 text-slate-600">
           Use your Google account to access protected routes.
         </p>
-        <Button
+        <GoogleSignInButton
           onClick={handleGoogleSignIn}
           disabled={isPending}
+          aria-busy={isPending}
           className="w-full"
-        >
-          {isPending ? 'Redirecting...' : 'Continue with Google'}
-        </Button>
+        />
         {errorMessage ? (
           <p className="mt-4 text-sm text-red-600">{errorMessage}</p>
         ) : null}
